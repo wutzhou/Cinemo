@@ -1,12 +1,12 @@
 # ckpt
-ckpt: # not used
+ckpt: cinemo.pt 
 save_img_path: "./sample_videos/"
 
 pretrained_model_path: "maxin-cn/Cinemo"
 
 # model config: 
 model: UNet
-video_length: 15
+video_length: 5 
 image_size: [320, 512]
 # beta schedule
 beta_start: 0.0001
@@ -24,8 +24,8 @@ use_dct: True
 guidance_scale: 7.5 #
 motion_bucket_id: 8 # The larger the value, the larger the motion intensity
 sample_method: 'DDIM'
-num_sampling_steps: 50
-enable_vae_temporal_decoder: True
+num_sampling_steps: 20
+enable_vae_temporal_decoder: False 
 image_prompts: [
               ['aircraft.jpg', 'aircrafts flying'],
               ['car.jpg' ,"car moving"],
