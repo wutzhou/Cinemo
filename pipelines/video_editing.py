@@ -27,6 +27,18 @@ from models.unet import UNet3DConditionModel
 from einops import repeat
 from utils import dct_low_pass_filter, exchanged_mixed_dct_freq
 
+import torch, gc, os
+
+# 1. Clear GPU cache
+torch.cuda.empty_cache()
+
+# 2. Force Python GC
+gc.collect()
+
+# 3. Enable expandable segments (reduces fragmentation)
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
+
+
 def prepare_image(path, vae, transform_video, device, dtype=torch.float16):
     with open(path, 'rb') as f:
         image = Image.open(f).convert('RGB')
@@ -143,9 +155,9 @@ def main(args):
     ])
 
 
-    # video_path = './video_editing/A_man_walking_on_the_beach.mp4'
+    video_path = './video_editing/A_man_walking_on_the_beach.mp4'
     # video_path = './video_editing/a_corgi_walking_in_the_park_at_sunrise_oil_painting_style.mp4'
-    video_path = './video_editing/test_03.mp4'
+    # video_path = './video_editing/test_03.mp4'
 
 
     video_reader = DecordInit()
